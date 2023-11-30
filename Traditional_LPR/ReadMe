@@ -17,3 +17,10 @@ Here's a breakdown of its approach:
 6. License Plate Recognition using Tesseract OCR: The extracted license plate region is then passed to Tesseract OCR (pytesseract.image_to_string), an open-source OCR engine, to recognize the characters on the license plate. The script specifies a whitelist of characters (numbers and uppercase letters) to improve accuracy.
 
 7. Optional Post-processing: The code includes commented sections that indicate the potential for post-processing, such as displaying intermediate results (using matplotlib.pyplot) and refining OCR results with regular expressions.
+
+##########
+The example output platform：
+CPU: Intel(R) Core(TM) i7-10700K CPU @ 3.80GHz   3.70 GHz
+GPU: NVIDIA RTX 3080 
+RAM: 32.0 GB
+##########
