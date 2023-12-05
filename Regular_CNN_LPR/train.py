@@ -34,14 +34,14 @@ image_path = 'D:/archive/test/79-I-0877.png' # test image
 img = cv2.imread(image_path)
 processed_image = extract_license_plate(image_path)
 
-###提取license plate and find characters in the resulting images，已完成 - from traditional_LPR import extract_license_plate
+###Extract license plate and find characters in the resulting images, completed - from traditional_LPR import extract_license_plate
 
 ###Segmenting the alphanumeric characters from the license plate.
 def find_contours(dimensions, img):
-     # 将图像转换为灰度图像
+     # Convert image to grayscale
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    # 应用二值化处理
+    # Apply binarization
     _, binary = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
 
     # Find all contours in the image
@@ -76,7 +76,7 @@ def find_contours(dimensions, img):
             # Make result formatted for classification: invert colors
             char = cv2.subtract(255, char)
 
-            # 在复制到 char_copy 之前，确保 char 是灰度图像
+            # Make sure the char is a grayscale image before copying to char_copy
             char_gray = cv2.cvtColor(char, cv2.COLOR_BGR2GRAY)
 
             # Resize the image to 24x44 with black border
@@ -100,28 +100,26 @@ def find_contours(dimensions, img):
     return img_res
 
 def display_characters(images):
-    # 设定显示的行数和列数
+    # Set the number of rows and columns to display
     n_cols = len(images)
     n_rows = 1
     
-    # 创建一个图形和一组子图
+    # Create a graph and a set of subgraphs
     fig, axes = plt.subplots(n_rows, n_cols, figsize=(n_cols * 2, n_rows * 3))
-    if n_cols == 1: # 如果只有一个字符，则将 axes 转换为列表
+    if n_cols == 1: # If there is only one character, convert axes to a list
         axes = [axes]
     
     for ax, img in zip(axes, images):
-        ax.imshow(img, cmap='gray') # 显示字符图像
-        ax.axis('off') # 关闭坐标轴显示
+        ax.imshow(img, cmap='gray') 
+        ax.axis('off') 
 
     #plt.show()
 
-# 调用 find_contours 函数获取字符图像数组
-# 假设已经有了车牌的二值图像 plate_binary
-# dimensions 参数是字符尺寸的预估范围，需要根据实际情况调整
-dimensions = [15, 100, 100, 200]  # 示例：宽度15-100像素，高度100-200像素
+# Call the find_contours function to obtain the character image array
+# The dimensions parameter is the estimated range of character sizes
+dimensions = [15, 100, 100, 200]  #  width 15-100 pixels, height 100-200 pixels
 char_images = find_contours(dimensions, processed_image)
 
-# 使用 display_characters 函数显示字符
 #display_characters(char_images)
 
 ###create model
@@ -149,7 +147,7 @@ validation_generator = train_datagen.flow_from_directory(
         class_mode='categorical',
         color_mode='grayscale')
 
-# 编译模型
+# Compile model
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
 class stop_training_callback(tf.keras.callbacks.Callback):
@@ -173,7 +171,7 @@ model.fit_generator(train_generator,
 
 
 
-###output
+### output
 def fix_dimension(img): 
   new_img = np.zeros((28,28,3))
   for i in range(3):
@@ -189,14 +187,14 @@ def show_results(char_images):
     output = []
     for i,ch in enumerate(char_images): #iterating over the characters
         img_ = cv2.resize(ch, (28,28))
-        if len(img_.shape) == 3 and img_.shape[2] == 3:  # 检查是否为彩色图像
-            img_ = cv2.cvtColor(img_, cv2.COLOR_BGR2GRAY)  # 转换为灰度图像
+        if len(img_.shape) == 3 and img_.shape[2] == 3:  # Check if it is a color image
+            img_ = cv2.cvtColor(img_, cv2.COLOR_BGR2GRAY)  # Convert to grayscale image
         
         #img = fix_dimension(img_)
         img = img_.reshape(1,28,28,1) #preparing image for the model
         predictions = model.predict(img, verbose=0)
         #y_ = model.predict_classes(img)[0] #predicting the class
-        y_ = np.argmax(predictions, axis=1)[0]  # 预测类别
+        y_ = np.argmax(predictions, axis=1)[0]  # Prediction category
         character = dic[y_] #
         output.append(character) #storing the result in a list
         
