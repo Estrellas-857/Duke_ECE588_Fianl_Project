@@ -82,23 +82,23 @@ def extract_license_plate(image_path):
 
 def read_license_plate(license_plate_img):
     if license_plate_img is not None:
-        # 将OpenCV图像转换为PIL图像格式
+        # Convert OpenCV image to PIL image format
         license_plate_img_pil = Image.fromarray(cv2.cvtColor(license_plate_img, cv2.COLOR_BGR2RGB))
 
-        # Tesseract配置：使用白名单来限制字符集
+        # Tesseract configuration: use whitelist to limit character set
         config = '-c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ --psm 8'
 
-        # 使用Tesseract进行OCR
+        # OCR using Tesseract
         text = pytesseract.image_to_string(license_plate_img_pil, config=config)
 
-        # 可选：使用正则表达式进行后处理
+        # Optional: Use regular expressions for post-processing
         # import re
         # pattern = re.compile("[A-Z0-9]+")
         # matches = pattern.findall(text)
         # if matches:
         #     text = " ".join(matches)
 
-        #print(text)  # 输出识别到的文本
+        #print(text)
         return text
     else:
         print("No license plate found")
@@ -107,7 +107,7 @@ def read_license_plate(license_plate_img):
 
 
 if __name__ == "__main__":
-    # 替换为车辆图片路径
+    
     image_path = 'D:/archive/test/1/80-ZL-029.png'#for test
     license_plate_img = extract_license_plate(image_path)
     read_license_plate(license_plate_img)
