@@ -5,7 +5,7 @@ import os
 
 class CustomDataGenerator(Sequence):
     def __init__(self, image_paths, batch_size, img_width, img_height, downsample_factor, max_text_length):
-        self.image_paths = image_paths  # 图像路径列表
+        self.image_paths = image_paths  
         self.batch_size = batch_size
         self.img_width = img_width
         self.img_height = img_height
@@ -25,30 +25,30 @@ class CustomDataGenerator(Sequence):
 
 
 
-        #print(f"当前批次处理的图像路径: {batch_paths}")  # 打印当前批次的图像路径
+        #print(f"The image path of the current batch: {batch_paths}") 
 
         x = np.zeros((batch_size, self.img_height, self.img_width, 3), dtype=np.float32)
         y = np.ones([batch_size, self.max_text_length]) * -1
-        #y = np.zeros((batch_size, self.max_text_length, self.num_classes), dtype=np.float32)  # 使用独热编码
+        #y = np.zeros((batch_size, self.max_text_length, self.num_classes), dtype=np.float32)  # Use one-hot encoding
         input_length = np.ones((batch_size, 1)) * (self.img_width // self.downsample_factor )
         label_length = np.zeros((batch_size, 1))
 
         for i, path in enumerate(batch_paths):
-            #print(f"处理图像: {path}")  # 打印当前处理的图像路径
+            #print(f"currently processed image path: {path}")  
 
             img = cv2.imread(path)
             if img is None:
-                print(f"Warning: 无法加载图像 {path}")
+                print(f"Warning: unable to load the image {path}")
                 continue
 
-            #print(f"图像尺寸: {img.shape}")  # 打印图像尺寸，确认图像已被加载
+            #print(f"image size: {img.shape}")  # Print image size to confirm image has been loaded
 
             img = cv2.resize(img, (self.img_width, self.img_height))
             img = img.astype(np.float32) / 255.0
             x[i] = img
 
             label = os.path.basename(path).split('.')[0].replace('-', '')
-            #print(f"对应标签: {label}")  # 打印对应的标签
+            #print(f"label: {label}")  # Print the corresponding label
 
             label_length[i] = len(label)
             y[i, :len(label)] = [self.char_list.index(char) for char in label if char in self.char_list]
