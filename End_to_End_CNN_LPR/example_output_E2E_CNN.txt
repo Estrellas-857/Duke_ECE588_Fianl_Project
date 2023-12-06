@@ -1022,4 +1022,7 @@
 总运行时间: 0.11秒
 处理的图片数量: 1000
 
+Accuracy: 0.00%
+Total runtime: 0.11 seconds
+Total number of processed images: 1000
 ### Due to the terminal limitation, the result could only display 1000 lines.
