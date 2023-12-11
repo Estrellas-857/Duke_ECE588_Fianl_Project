@@ -32,5 +32,6 @@ data source: https://www.kaggle.com/datasets/tustunkok/synthetic-turkish-license
 reference: https://github.com/SarthakV7/AI-based-indian-license-plate-detection/blob/master/README.md
 
 ### Report Link
-Click [here](https://github.com/Estrellas-857/Duke_ECE588_Fianl_Project/files/13630133/ECE588___Project_Report.pdf) to read the report.
+Click below to read the report.
 
+[ECE588___Project_Report.pdf](https://github.com/Estrellas-857/Duke_ECE588_Fianl_Project/files/13630147/ECE588___Project_Report.pdf)
