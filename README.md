@@ -34,3 +34,6 @@ reference: https://github.com/SarthakV7/AI-based-indian-license-plate-detection/
 ### Report Link
 Click [here](https://github.com/Estrellas-857/Duke_ECE588_Fianl_Project/blob/main/ECE588___Project_Report.pdf) to read the report.
 
+### Extra File Required
+Tesseract needs to be installed in advance. Click [here](https://github.com/tesseract-ocr/tesseract) for more info.
+ 
